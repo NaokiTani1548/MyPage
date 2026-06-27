@@ -1,89 +1,201 @@
 <!DOCTYPE html>
-<html lang = "en-US">
- <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Introduction</title>
-    <link rel = "stylesheet" href = "Introduce.css"></link>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
- </head>
- <body>
-    <div id="wrap">
-        <div id="wrap">
-            <div id="tab1" class="tab selected">Home</div>
-            <div id="tab2" class="tab">Info</div>
-            <div id="tab3" class="tab">Production</div>
-            <div id="tab4" class="tab">Others</div>
-          
-            <div id="container">
-              <div id="slide" class="">
-                <div id="first" class="box">
-                  <div class="wrap">
-                    <b>
-                   <h1 class="typing">Welcome to My Page!</h1>
-                   </b>
-                  </div>
-                    <p></p>
-                    <div class="album">
-                      <img class="img1" src="自己紹介.jpg" >
-                      <img class="img2" src="自己紹介2.jpg">
-                      <img class="img3" src="147357.jpg">
-                      <img class="img4" src="147359.jpg">
-                    </div>
-                    
-                </div>
-                <div id="second" class="box">
-                  <p></p>
-                    <h1>谷  尚樹</h1>
-                    <ul class="cp_list">
-                        <li><p></p>
-                            <b>~Profile~</b><br>
-                            所属：同志社大学 理工学部 情報システムデザイン学科<br>
-                            出身：兵庫県宝塚市<br>
-                            生年月日：2003年11月21日<br>
-                            趣味：野球、読書、ゲーム<br>
-                            <p></p>
-                        </li>
-                        <p></p>
-                        <li><p></p>
-                            <b>~Skills~</b><br>
-                            ＜プログラミング言語＞<br>
-                            ・Java    ・Kotlin    ・HTML/CSS<br>
-                            ・JavaScript    ・C  <br>
-                            <p></p>
-                            ＜サーバーサイドプログラム＞<br>
-                            ・JSP   ・Servlets 
-                            <p></p>
-                        </li>
-                        <p></p>
-                        <li><p></p>
-                          <b>~Comment~</b><br>
-                            特にありません。<br>
-                            <p></p>
-                          </li>
-                     </ul>
-                </div>
-                <div id="third" class="box">
-                  <h1>これまでの制作物</h1>
-                  <ul class="pro_list">
-                      <li><b>1, 電卓</b> 　使用言語　Java　2023年2月～4月 （AndroidStudio）</li>
-                      <li><b>2, ブラックジャック</b>　使用言語　Kotlin 2022年8月～11月（AndroidStudio）</li>
-                      <li><b>3, <a href="https://play.google.com/store/apps/details?id=com.websarva.wings.avoidgame3">
-                        避けゲーム</a></b>　使用言語　Java　2023年2～5月（AndroidStudio）</li>
-                      <li><b>4, 予定管理帳 </b>　使用言語　html/CSS/Javascript　2023年6月～(Graph API）</li>
-                  </ul>
-
-                </div>
-                <div id="four" class="box">
-                  <h1>各プラットフォームのアカウント</h1>
-                  <ul class = "ac_list">
-                    <li><a href="https://github.com/NaokiTani1548">
-                    GitHub</a></li>
-                    <li><a href="https://www.instagram.com/naok1tani3_4_8/?hl=ja">
-                      Instagram</a></li>
-                </div>
-              </div>
-            </div>
-          </div>
-          <script src ="Introduce.js"></script>
- </body>
- </html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naoki Tanino</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+  :root {
+    --base: #0c0c0f;
+    --surface: #151518;
+    --border: #24242b;
+    --text-1: #e4e2dd;
+    --text-2: #807f8a;
+    --accent: #7b8cde;
+    --accent-glow: rgba(123, 140, 222, 0.15);
+  }
+ 
+  html { height: 100%; }
+ 
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--base);
+    color: var(--text-1);
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 24px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+ 
+  .hub {
+    width: 100%;
+    max-width: 520px;
+  }
+ 
+  /* ── Header ── */
+  .hub-header {
+    margin-bottom: 48px;
+  }
+  .hub-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-1);
+    margin-bottom: 12px;
+  }
+  .hub-rule {
+    width: 32px;
+    height: 2px;
+    background: var(--accent);
+    border: none;
+    margin-bottom: 14px;
+  }
+  .hub-desc {
+    font-size: 14px;
+    color: var(--text-2);
+    font-weight: 400;
+    line-height: 1.7;
+  }
+ 
+  /* ── Links ── */
+  .hub-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+ 
+  .hub-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 22px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .hub-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .hub-link:hover {
+    border-color: rgba(123, 140, 222, 0.3);
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
+  .hub-link:hover::before {
+    opacity: 1;
+  }
+  .hub-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+ 
+  .link-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .link-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .link-arrow {
+    font-size: 14px;
+    color: var(--text-2);
+    transition: color 0.3s, transform 0.3s;
+  }
+  .hub-link:hover .link-arrow {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+  .link-desc {
+    font-size: 13px;
+    color: var(--text-2);
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .link-tag {
+    display: inline-block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-glow);
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-top: 10px;
+    letter-spacing: 0.04em;
+  }
+ 
+  /* ── Footer ── */
+  .hub-footer {
+    margin-top: 56px;
+    font-size: 12px;
+    color: var(--text-2);
+    opacity: 0.5;
+    letter-spacing: 0.04em;
+  }
+ 
+  @media (prefers-reduced-motion: reduce) {
+    .hub-link, .hub-link::before, .link-arrow {
+      transition: none;
+    }
+  }
+</style>
+</head>
+<body>
+ 
+<div class="hub">
+  <header class="hub-header">
+    <h1 class="hub-name">Naoki Tanino</h1>
+    <hr class="hub-rule">
+    <p class="hub-desc">ページ一覧</p>
+  </header>
+ 
+  <nav class="hub-links">
+    <a href="/murder-mystery-guide/" class="hub-link">
+      <div class="link-top">
+        <span class="link-title">マーダーミステリー はじめてガイド</span>
+        <span class="link-arrow">&rarr;</span>
+      </div>
+      <span class="link-desc">初心者向けのマーダーミステリー説明資料</span>
+      <span class="link-tag">Game</span>
+    </a>
+ 
+    <a href="/my_page_old/" class="hub-link">
+      <div class="link-top">
+        <span class="link-title">自己紹介</span>
+        <span class="link-arrow">&rarr;</span>
+      </div>
+      <span class="link-desc">プロフィールや経歴をまとめたページ ※旧ページ</span>
+      <span class="link-tag">Profile</span>
+    </a>
+  </nav>
+ 
+  <footer class="hub-footer">
+    &copy; Naoki Tanino
+  </footer>
+</div>
+ 
+</body>
+</html>
