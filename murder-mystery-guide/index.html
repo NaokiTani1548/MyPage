@@ -7,204 +7,260 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #1a1a2e;
-    --parchment: #f0ece2;
-    --blood: #8b0000;
-    --gold: #c9a84c;
-    --gold-dim: rgba(201, 168, 76, 0.15);
-    --shadow: #16213e;
-    --text: #2c2c3a;
-    --text-light: #5a5a6e;
+    --bg:        #e8e4d8;
+    --bg-warm:   #f0ece2;
+    --bg-card:   #faf8f3;
+    --ink:       #1a1a2e;
+    --ink-mid:   #38384e;
+    --blood:     #8b0000;
+    --blood-b:   #a82020;
+    --gold:      #a07828;
+    --gold-pale: rgba(160,120,40,0.12);
+    --text:      #2c2c3e;
+    --text-light:#68687e;
+    --rule:      rgba(26,26,46,0.1);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     font-family: 'Noto Sans JP', sans-serif;
-    background: var(--parchment);
+    background-color: var(--bg);
+    background-image: url('background.png');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center top;
     color: var(--text);
-    line-height: 1.8;
+    line-height: 1.85;
     font-weight: 400;
   }
- 
+  strong { color: var(--ink); font-weight: 700; }
+
+  /* ── Curtain overlay ── */
+  .curtain-overlay {
+    position: fixed;
+    inset: 0;
+    background-image: url('curtain.png');
+    background-size: cover;
+    background-position: center top;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
   /* ── Hero ── */
   .hero {
     background: var(--ink);
-    color: var(--parchment);
-    padding: 80px 24px 60px;
+    color: var(--bg-warm);
+    padding: 110px 24px 90px;
     text-align: center;
     position: relative;
     overflow: hidden;
   }
+  /* Animated glows */
   .hero::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 50% 120%, var(--shadow), var(--ink) 70%);
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139,0,0,0.22) 0%, transparent 65%);
+    top: -260px; left: 50%;
+    transform: translateX(-50%);
+    animation: glow1 7s ease-in-out infinite;
   }
-  .hero-content { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
-  .hero-ornament {
-    width: 48px; height: 2px;
-    background: var(--gold);
-    margin: 0 auto 20px;
-    position: relative;
-  }
-  .hero-ornament::before, .hero-ornament::after {
+  .hero::after {
     content: '';
     position: absolute;
-    top: -4px;
-    width: 10px; height: 10px;
-    border: 2px solid var(--gold);
+    width: 500px; height: 500px;
     border-radius: 50%;
+    background: radial-gradient(circle, rgba(160,120,40,0.14) 0%, transparent 65%);
+    bottom: -200px; right: -80px;
+    animation: glow2 9s ease-in-out infinite;
   }
-  .hero-ornament::before { left: -16px; }
-  .hero-ornament::after { right: -16px; }
+  @keyframes glow1 {
+    0%,100% { opacity:.6; transform: translateX(-50%) scale(1); }
+    50%      { opacity:1;  transform: translateX(-50%) scale(1.12); }
+  }
+  @keyframes glow2 {
+    0%,100% { opacity:.5; transform: scale(1); }
+    50%      { opacity:.9; transform: scale(1.1); }
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .hero-ornament {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    margin: 0 auto 28px;
+  }
+  .hero .subtitle {
+    display: block;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
   .hero h1 {
     font-family: 'Noto Serif JP', serif;
     font-weight: 900;
-    font-size: clamp(28px, 5vw, 42px);
-    letter-spacing: 0.08em;
-    margin-bottom: 8px;
+    font-size: clamp(30px, 6vw, 52px);
+    letter-spacing: 0.06em;
+    line-height: 1.3;
+    color: var(--bg-warm);
   }
   .hero h1 span { color: var(--gold); }
-  .hero .subtitle {
-    font-size: 14px;
-    color: var(--gold);
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    font-weight: 500;
+  .hero-sub {
+    margin-top: 24px;
+    font-size: 13px;
+    color: rgba(240,236,226,0.45);
+    letter-spacing: 0.1em;
   }
- 
+
   /* ── TOC ── */
   .toc {
     max-width: 720px;
     margin: 0 auto;
-    padding: 40px 24px 0;
+    padding: 48px 24px 0;
   }
-  .toc h2 {
+  .toc-label {
     font-family: 'Noto Serif JP', serif;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: 700;
-    color: var(--blood);
-    letter-spacing: 0.2em;
-    margin-bottom: 16px;
+    color: var(--blood-b);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
   }
   .toc ol {
     list-style: none;
     padding: 0;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0;
+    border: 1px solid var(--rule);
+    background: var(--bg-card);
   }
   @media (min-width: 520px) {
     .toc ol { grid-template-columns: 1fr 1fr; }
   }
-  .toc li { border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .toc li { border-bottom: 1px solid var(--rule); }
+  .toc li:last-child { border-bottom: none; }
   .toc a {
     display: block;
-    padding: 10px 0;
-    font-size: 14px;
-    color: var(--ink);
+    padding: 12px 20px;
+    font-size: 13px;
+    color: var(--ink-mid);
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.2s, background 0.2s;
+    letter-spacing: 0.02em;
   }
-  .toc a:hover { color: var(--blood); }
+  .toc a:hover { color: var(--blood); background: var(--gold-pale); }
   .toc a .toc-num {
     display: inline-block;
     width: 24px;
     color: var(--gold);
     font-family: 'Noto Serif JP', serif;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 12px;
   }
- 
+
   /* ── Container ── */
   .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
- 
+
   /* ── Section ── */
   .section {
-    padding: 48px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 60px 0;
+    border-bottom: 1px solid var(--rule);
   }
   .section:last-child { border-bottom: none; }
   .section-label {
     font-family: 'Noto Serif JP', serif;
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    color: var(--blood);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--blood-b);
     text-transform: uppercase;
     font-weight: 700;
     margin-bottom: 8px;
   }
   .section h2 {
     font-family: 'Noto Serif JP', serif;
-    font-size: clamp(22px, 4vw, 28px);
+    font-size: clamp(22px, 4vw, 30px);
     font-weight: 700;
     color: var(--ink);
-    margin-bottom: 20px;
-    line-height: 1.4;
+    margin-bottom: 24px;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
   }
-  .section p {
+  .section > p {
     font-size: 15px;
     margin-bottom: 16px;
     color: var(--text);
+    line-height: 1.9;
   }
- 
-  /* ── Card grid ── */
+
+  /* ── Cards (About) ── */
   .card-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 16px;
-    margin-top: 24px;
+    gap: 1px;
+    margin-top: 32px;
+    border: 1px solid var(--rule);
+    background: var(--rule);
   }
   @media (min-width: 520px) {
     .card-grid { grid-template-columns: 1fr 1fr; }
   }
   .card {
-    background: #fff;
-    border-radius: 8px;
-    padding: 24px;
-    border-left: 3px solid var(--gold);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-    box-sizing: border-box;
+    background: var(--bg-card);
+    padding: 28px 24px;
+    transition: background 0.25s;
+  }
+  .card:hover { background: #fff; }
+  .card-icon {
+    font-size: 16px;
+    color: var(--gold);
+    opacity: 0.75;
+    margin-bottom: 12px;
+    line-height: 1;
+    letter-spacing: 0;
   }
   .card h3 {
     font-family: 'Noto Serif JP', serif;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--ink);
     margin-bottom: 8px;
+    letter-spacing: 0.02em;
   }
   .card p {
-    font-size: 14px;
-    line-height: 1.7;
+    font-size: 13px;
+    line-height: 1.8;
     color: var(--text-light);
     margin-bottom: 0;
   }
- 
+
   /* ── Flow ── */
-  .flow { margin-top: 24px; }
- 
-  .phase-group {
-    margin-bottom: 36px;
-  }
+  .flow { margin-top: 28px; }
+  .phase-group { margin-bottom: 40px; }
   .phase-group:last-child { margin-bottom: 0; }
   .phase-label {
     font-family: 'Noto Serif JP', serif;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 700;
-    color: var(--parchment);
+    color: var(--bg-warm);
     background: var(--ink);
     display: inline-block;
     padding: 4px 16px;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    letter-spacing: 0.1em;
+    margin-bottom: 22px;
+    letter-spacing: 0.12em;
   }
-  .phase-label.prep { background: #3a5a40; }
-  .phase-label.main { background: var(--ink); }
+  .phase-label.prep   { background: #2a4a30; }
+  .phase-label.main   { background: var(--ink); }
   .phase-label.action { background: var(--blood); }
-  .phase-label.end { background: #4a4a6a; }
- 
+  .phase-label.end    { background: #3a3a5a; }
   .flow-step {
     display: flex;
     gap: 20px;
@@ -227,22 +283,20 @@
     position: relative;
     z-index: 1;
   }
-  .phase-group.prep .flow-marker { background: #3a5a40; }
+  .phase-group.prep   .flow-marker { background: #2a4a30; }
   .phase-group.action .flow-marker { background: var(--blood); }
-  .phase-group.end .flow-marker { background: #4a4a6a; }
- 
+  .phase-group.end    .flow-marker { background: #3a3a5a; }
   .flow-step:not(:last-child) .flow-marker::after {
     content: '';
     position: absolute;
-    top: 44px;
-    left: 50%;
+    top: 44px; left: 50%;
     transform: translateX(-50%);
-    width: 2px;
+    width: 1px;
     height: calc(100% + 28px - 44px);
     background: repeating-linear-gradient(
-      to bottom, var(--gold) 0, var(--gold) 4px, transparent 4px, transparent 8px
+      to bottom, var(--gold) 0, var(--gold) 4px, transparent 4px, transparent 9px
     );
-    opacity: 0.4;
+    opacity: 0.35;
   }
   .flow-body { padding-top: 6px; flex: 1; }
   .flow-body h3 {
@@ -256,159 +310,221 @@
     font-size: 14px;
     color: var(--text-light);
     margin-bottom: 0;
+    line-height: 1.8;
   }
- 
   .repeat-note {
     display: inline-block;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
-    color: var(--blood);
-    background: rgba(139, 0, 0, 0.08);
-    border: 1px solid rgba(139, 0, 0, 0.15);
-    border-radius: 4px;
+    color: var(--blood-b);
+    background: rgba(139,0,0,0.07);
+    border: 1px solid rgba(139,0,0,0.18);
     padding: 2px 10px;
     margin-left: 8px;
     vertical-align: middle;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
   }
- 
-  /* ── Glossary / Terms ── */
-  .glossary { margin-top: 24px; }
+
+  /* ── Glossary (Roles) ── */
+  .glossary { margin-top: 28px; }
   .glossary-item {
-    padding: 14px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
   }
-  .glossary-item:last-child { border-bottom: none; }
+  .glossary-item:first-child { border-top: 1px solid var(--rule); }
   .glossary-term {
     font-family: 'Noto Serif JP', serif;
     font-weight: 700;
     font-size: 15px;
     color: var(--ink);
-    margin-bottom: 2px;
+    margin-bottom: 4px;
   }
-  .glossary-def {
-    font-size: 14px;
-    color: var(--text-light);
+  .glossary-def { font-size: 14px; color: var(--text-light); line-height: 1.8; }
+
+  /* ── Accordion ── */
+  .accordion { margin-top: 28px; }
+  .accordion-item {
+    border-bottom: 1px solid var(--rule);
+    scroll-margin-top: 24px;
   }
- 
-  /* ── Term cards (detailed) ── */
-  .term-card {
-    background: #fff;
-    border-radius: 8px;
-    padding: 24px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-    border-left: 3px solid var(--gold);
+  .accordion-item:first-child { border-top: 1px solid var(--rule); }
+
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 0;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
   }
-  .term-card h3 {
+  .accordion-header:hover .accordion-title { color: var(--blood); }
+
+  .accordion-num {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    border: 1px solid rgba(26,26,46,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: 'Noto Serif JP', serif;
-    font-size: 16px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .accordion-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px;
     font-weight: 700;
     color: var(--ink);
-    margin-bottom: 8px;
+    flex: 1;
+    transition: color 0.2s;
+    letter-spacing: 0.02em;
   }
-  .term-card p {
+
+  .accordion-icon {
+    flex-shrink: 0;
+    width: 18px; height: 18px;
+    border: 1px solid rgba(26,26,46,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-mid);
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 300;
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), border-color 0.2s;
+  }
+  .accordion-item.open .accordion-icon {
+    transform: rotate(45deg);
+    border-color: var(--blood);
+    color: var(--blood);
+  }
+
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .accordion-body-inner {
+    padding: 0 0 22px 36px;
     font-size: 14px;
-    line-height: 1.7;
+    line-height: 1.9;
     color: var(--text-light);
-    margin-bottom: 0;
+    border-left: 1px solid var(--rule);
+    margin-left: 10px;
   }
- 
+
   /* ── Rules ── */
   .rules-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 20px;
-    margin-top: 24px;
+    gap: 16px;
+    margin-top: 28px;
   }
   @media (min-width: 520px) {
     .rules-grid { grid-template-columns: 1fr 1fr; }
   }
+  .rules-col {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    padding: 24px;
+  }
+  .rules-col.do   { border-top: 2px solid #3a7d3e; }
+  .rules-col.dont { border-top: 2px solid var(--blood); }
   .rules-col h3 {
     font-family: 'Noto Serif JP', serif;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 700;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 0.08em;
   }
-  .rules-col.do h3 { color: #2e7d32; }
+  .rules-col.do   h3 { color: #2e7d32; }
   .rules-col.dont h3 { color: var(--blood); }
   .rules-col ul { list-style: none; padding: 0; }
   .rules-col li {
-    font-size: 14px;
-    padding: 8px 0;
-    padding-left: 20px;
+    font-size: 13px;
+    padding: 9px 0 9px 22px;
     position: relative;
-    color: var(--text);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    color: var(--text-light);
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.65;
   }
-  .rules-col.do li::before {
-    content: '\25CB';
-    position: absolute; left: 0;
-    color: #2e7d32; font-weight: 700;
-  }
-  .rules-col.dont li::before {
-    content: '\00D7';
-    position: absolute; left: 0;
-    color: var(--blood); font-weight: 700;
-  }
- 
-  /* ── Inline term link ── */
+  .rules-col li:last-child { border-bottom: none; }
+  .rules-col.do   li::before { content: '○'; position: absolute; left: 0; top: 10px; color: #2e7d32; font-weight: 700; font-size: 11px; }
+  .rules-col.dont li::before { content: '×'; position: absolute; left: 0; top: 10px; color: var(--blood); font-weight: 700; font-size: 12px; }
+
+  /* ── Term link ── */
   a.term-link {
-    color: var(--ink);
+    color: var(--text);
     text-decoration: none;
-    border-bottom: 1px dashed var(--gold);
+    border-bottom: 1px dashed rgba(160,120,40,0.5);
     transition: color 0.2s, border-color 0.2s;
   }
-  a.term-link:hover {
-    color: var(--blood);
-    border-color: var(--blood);
-  }
- 
+  a.term-link:hover { color: var(--blood); border-color: var(--blood); }
+
   /* ── Highlight ── */
   .highlight {
     background: var(--ink);
-    color: var(--parchment);
-    border-radius: 8px;
-    padding: 32px;
-    margin-top: 24px;
+    border: none;
+    padding: 52px 40px;
+    margin-top: 0;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .highlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(139,0,0,0.18), transparent 70%);
+    animation: hpulse 6s ease-in-out infinite;
+  }
+  @keyframes hpulse {
+    0%,100% { opacity:.7; transform:scale(1); }
+    50%      { opacity:1;  transform:scale(1.06); }
   }
   .highlight p {
-    color: var(--parchment);
+    color: var(--bg-warm);
     font-family: 'Noto Serif JP', serif;
-    font-size: 18px;
-    line-height: 1.8;
+    font-size: clamp(16px, 3vw, 20px);
+    line-height: 2.1;
     margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.04em;
   }
-  .highlight p span {
-    color: var(--gold);
-    font-weight: 700;
-  }
- 
+  .highlight p span { color: var(--gold); font-weight: 700; }
+
   /* ── Footer ── */
   .footer {
     text-align: center;
     padding: 40px 24px;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-light);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.25em;
+    border-top: 1px solid var(--rule);
   }
 </style>
 </head>
 <body>
- 
+
+<div class="curtain-overlay" aria-hidden="true"></div>
+
 <!-- Hero -->
 <header class="hero">
   <div class="hero-content">
     <div class="hero-ornament"></div>
-    <div class="subtitle">Beginner's Guide</div>
+    <span class="subtitle">Beginner's Guide</span>
     <h1><span>マーダーミステリー</span><br>はじめてガイド</h1>
+    <p class="hero-sub">— はじめての人のための手引き —</p>
   </div>
 </header>
- 
+
 <!-- TOC -->
 <nav class="toc">
-  <h2>目次</h2>
+  <div class="toc-label">目次</div>
   <ol>
     <li><a href="#about"><span class="toc-num">1.</span>マーダーミステリーとは？</a></li>
     <li><a href="#flow"><span class="toc-num">2.</span>ゲームの流れ</a></li>
@@ -418,9 +534,9 @@
     <li><a href="#tips"><span class="toc-num">6.</span>初心者のためのコツ</a></li>
   </ol>
 </nav>
- 
+
 <div class="container">
- 
+
   <!-- ━━ About ━━ -->
   <section class="section" id="about">
     <div class="section-label">About</div>
@@ -430,36 +546,40 @@
       基本的にプレイヤーはそれぞれ秘密や背景を抱えたキャラクターを演じ、会話や証拠をもとに「犯人は誰か？」を推理します。
     </p>
     <p>
-        ボードゲームとも演劇とも違う、参加者全員の選択や言葉で物語を紡ぐ体験。同じシナリオをもう一度遊ぶことはできないからこそ、その時間はかけがえのない物語になります。
+      ボードゲームとも演劇とも違う、参加者全員の選択や言葉で物語を紡ぐ体験。同じシナリオをもう一度遊ぶことはできないからこそ、その時間はかけがえのない物語になります。
     </p>
     <div class="card-grid">
       <div class="card">
+        <div class="card-icon">◈</div>
         <h3>ロールプレイ</h3>
         <p>与えられたキャラクターになりきり、その人物の立場で考え、発言します。演技力は不要。自分なりの解釈でOKです。</p>
       </div>
       <div class="card">
+        <div class="card-icon">◎</div>
         <h3>推理</h3>
         <p>他のプレイヤーとの会話や手がかりから情報を集め、各キャラクターが求める真相を導きます。</p>
       </div>
       <div class="card">
+        <div class="card-icon">⚔</div>
         <h3>秘密と駆け引き</h3>
         <p>各キャラクターには隠された目的や秘密があります。何を話し、何を隠すかはあなた次第。</p>
       </div>
       <div class="card">
+        <div class="card-icon">❖</div>
         <h3>物語体験</h3>
-        <p>ロールプレイ、推理、駆け引き。そのすべてが重なり合い、参加者全員で一つの物語を完成させます</p>
+        <p>ロールプレイ、推理、駆け引き。そのすべてが重なり合い、参加者全員で一つの物語を完成させます。</p>
       </div>
     </div>
   </section>
- 
+
   <!-- ━━ Flow ━━ -->
   <section class="section" id="flow">
     <div class="section-label">Flow</div>
     <h2>ゲームの流れ</h2>
     <p>シナリオによって多少異なりますが、基本的な流れは以下のとおりです。</p>
- 
+
     <div class="flow">
- 
+
       <!-- 準備パート -->
       <div class="phase-group prep">
         <div class="phase-label prep">準備パート</div>
@@ -478,7 +598,7 @@
           </div>
         </div>
       </div>
- 
+
       <!-- 本編パート -->
       <div class="phase-group main">
         <div class="phase-label main">本編パート</div>
@@ -514,7 +634,7 @@
           </div>
         </div>
       </div>
- 
+
       <!-- アクションパート -->
       <div class="phase-group action">
         <div class="phase-label action">アクションパート</div>
@@ -529,7 +649,7 @@
           ※ アクションパートが存在しないシナリオや、最終行動の選択が投票と同時に行われるシナリオなどもあります。
         </p>
       </div>
- 
+
       <!-- エンディングパート -->
       <div class="phase-group end">
         <div class="phase-label end">エンディング</div>
@@ -541,10 +661,10 @@
           </div>
         </div>
       </div>
- 
+
     </div>
   </section>
- 
+
   <!-- ━━ Roles ━━ -->
   <section class="section" id="roles">
     <div class="section-label">Roles</div>
@@ -564,54 +684,114 @@
       </div>
     </div>
   </section>
- 
+
   <!-- ━━ Terms ━━ -->
   <section class="section" id="terms">
     <div class="section-label">Glossary</div>
     <h2>用語解説</h2>
-    <p>ゲーム中に登場する主な用語をまとめました。</p>
- 
-    <div class="term-card" id="term-gm">
-      <h3>GM（ゲームマスター）</h3>
-      <p>ゲーム全体の進行・管理を担う役割です。シナリオの読み上げ、タイマー管理、ルールに関する質問への回答を行います。GMはゲームの内容を把握しているため、プレイヤーとしては参加しません。ゲーム中に判断に迷ったら、まずGMに確認しましょう。</p>
-    </div>
- 
-    <div class="term-card" id="term-charsheet">
-      <h3>キャラクターシート</h3>
-      <p>各プレイヤーに1枚ずつ配られる、自分のキャラクターに関する情報が書かれた資料です。名前、経歴、他の登場人物との関係、そしてそのキャラクターだけが知っている秘密が記されています。他のプレイヤーには絶対に見せてはいけません。ゲーム中の行動はこのシートの内容に基づいて行います。</p>
-    </div>
- 
-    <div class="term-card" id="term-evidence">
-      <h3>証拠カード</h3>
-      <p>事件現場の状況や登場人物の持ち物など、推理の手がかりとなる情報が書かれたカードです。調査フェーズ中にプレイヤーが取得します。取得した証拠カードは自分だけが内容を確認でき、他のプレイヤーに口頭で伝える、特定の相手にだけ見せる、あるいは<a href="#term-mitsudan" class="term-link">密談</a>で交換するといった使い方ができます。どの情報を誰に公開するかが推理と駆け引きの鍵になります。</p>
-    </div>
- 
-    <div class="term-card" id="term-mitsudan">
-      <h3>密談</h3>
-      <p>調査フェーズ中に行える、プレイヤー同士の1対1の会話です。他のプレイヤーには聞こえない場所で行い、全体の場では話しにくい情報のやりとりに使います。シナリオによって回数や時間に制限があることが多いため、誰と密談するかの選択も重要な戦略です。</p>
-    </div>
- 
-    <div class="term-card" id="term-vote">
-      <h3>投票</h3>
-      <p>議論を経た後、全プレイヤーが「犯人だと思う人物」を一斉に指名する手続きです。最も多くの票を集めた人物が犯人として告発されます。投票は一斉に行い、他の人の様子を見てから決めることはできません。</p>
-    </div>
- 
-    <div class="term-card" id="term-action">
-      <h3>最終行動</h3>
-      <p>投票後に各プレイヤーが選択する最後のアクションです。<a href="#term-charsheet" class="term-link">キャラクターシート</a>にいくつかの選択肢が提示されており、どれを選ぶかによってエンディングの内容が変化します。推理の正解とは別に、物語としての結末を左右する重要な決断です。</p>
-    </div>
- 
-    <div class="term-card" id="term-netabare">
-      <h3>ネタバレ</h3>
-      <p>マーダーミステリーは一度しかプレイできないため、犯人や真相、キャラクターの秘密などの情報を未プレイの人に伝えることは厳禁です。SNSへの投稿や感想の共有時にも、内容に触れないよう十分注意しましょう。</p>
-    </div>
+    <p>ゲーム中に登場する主な用語をまとめました。各項目をクリックして展開できます。</p>
 
-    <div class="term-card" id="term-yudonarium">
-      <h3>ユドナリウム</h3>
-      <p>オンラインでマーダーミステリーを遊べるプラットフォームです。キャラクターシートや証拠カードをWeb上で管理し、オンラインセッションの進行をサポートします。<a href="https://udonarium.app/" target="_blank" rel="noopener noreferrer">ユドナリウム</a>にアクセスし、GMから部屋IDを聞きましょう。</p>
+    <div class="accordion">
+
+      <div class="accordion-item" id="term-gm">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-title">GM（ゲームマスター）</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            ゲーム全体の進行・管理を担う役割です。シナリオの読み上げ、タイマー管理、ルールに関する質問への回答を行います。GMはゲームの内容を把握しているため、プレイヤーとしては参加しません。ゲーム中に判断に迷ったら、まずGMに確認しましょう。
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="term-charsheet">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-title">キャラクターシート</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            各プレイヤーに1枚ずつ配られる、自分のキャラクターに関する情報が書かれた資料です。名前、経歴、他の登場人物との関係、そしてそのキャラクターだけが知っている秘密が記されています。他のプレイヤーには絶対に見せてはいけません。ゲーム中の行動はこのシートの内容に基づいて行います。
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="term-evidence">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-title">証拠カード</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            事件現場の状況や登場人物の持ち物など、推理の手がかりとなる情報が書かれたカードです。調査フェーズ中にプレイヤーが取得します。取得した証拠カードは自分だけが内容を確認でき、他のプレイヤーに口頭で伝える、特定の相手にだけ見せる、あるいは<a href="#term-mitsudan" class="term-link">密談</a>で交換するといった使い方ができます。どの情報を誰に公開するかが推理と駆け引きの鍵になります。
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="term-mitsudan">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-title">密談</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            調査フェーズ中に行える、プレイヤー同士の1対1の会話です。他のプレイヤーには聞こえない場所で行い、全体の場では話しにくい情報のやりとりに使います。シナリオによって回数や時間に制限があることが多いため、誰と密談するかの選択も重要な戦略です。
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="term-vote">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-title">投票</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            議論を経た後、全プレイヤーが「犯人だと思う人物」を一斉に指名する手続きです。最も多くの票を集めた人物が犯人として告発されます。投票は一斉に行い、他の人の様子を見てから決めることはできません。
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="term-action">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-title">最終行動</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            投票後に各プレイヤーが選択する最後のアクションです。<a href="#term-charsheet" class="term-link">キャラクターシート</a>にいくつかの選択肢が提示されており、どれを選ぶかによってエンディングの内容が変化します。推理の正解とは別に、物語としての結末を左右する重要な決断です。
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="term-netabare">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-title">ネタバレ</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            マーダーミステリーは一度しかプレイできないため、犯人や真相、キャラクターの秘密などの情報を未プレイの人に伝えることは厳禁です。SNSへの投稿や感想の共有時にも、内容に触れないよう十分注意しましょう。
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="term-yudonarium">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-title">ユドナリウム</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            オンラインでマーダーミステリーを遊べるプラットフォームです。キャラクターシートや証拠カードをWeb上で管理し、オンラインセッションの進行をサポートします。<a href="https://udonarium.app/" target="_blank" rel="noopener noreferrer">ユドナリウム</a>にアクセスし、GMから部屋IDを聞きましょう。
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
- 
+
   <!-- ━━ Rules ━━ -->
   <section class="section" id="rules">
     <div class="section-label">Rules</div>
@@ -642,55 +822,111 @@
       </div>
     </div>
   </section>
- 
+
   <!-- ━━ Tips ━━ -->
   <section class="section" id="tips">
     <div class="section-label">Tips</div>
     <h2>初心者のためのコツ</h2>
-    <div class="card-grid">
-      <div class="card">
-        <h3>メモを取る</h3>
-        <p>会話で得た情報はすぐメモしましょう。誰が何を言ったか、矛盾がないかを整理するのに役立ちます。</p>
+    <p>各項目をクリックして展開できます。</p>
+
+    <div class="accordion">
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-num">1</span>
+          <span class="accordion-title">メモを取る</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            会話で得た情報はすぐメモしましょう。誰が何を言ったか、矛盾がないかを整理するのに役立ちます。
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <h3><a href="#term-mitsudan" class="term-link">密談</a>を活用する</h3>
-        <p>1対1の密談は重要な情報源。全体の場では話せないことも密談なら聞き出せるかもしれません。</p>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-num">2</span>
+          <span class="accordion-title"><a href="#term-mitsudan" class="term-link">密談</a>を活用する</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            1対1の密談は重要な情報源。全体の場では話せないことも密談なら聞き出せるかもしれません。
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <h3>嘘の取り扱いには注意する</h3>
-        <p>嘘はあなたの状況を有利にすることもありますが、物語中盤で状況が変わったり、新しい証拠が出て辻褄が合わなくなることもあります。嘘をつく際はそのことを考慮し、慎重に利用しましょう。</p>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-num">3</span>
+          <span class="accordion-title">嘘の取り扱いには注意する</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            嘘はあなたの状況を有利にすることもありますが、物語中盤で状況が変わったり、新しい証拠が出て辻褄が合わなくなることもあります。嘘をつく際はそのことを考慮し、慎重に利用しましょう。
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <h3>キャラクターの心情と秘密を意識する</h3>
-        <p>時にはあなたにとって明かしたくない秘密を明らかにする選択肢もあります。事件解決のために秘密を明かすのか、それとも秘密を守るのか、迷った時はキャラクターの心情や背景を汲み取って「このキャラクターならどうするか」を判断基準に慎重に考えましょう。</p>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-num">4</span>
+          <span class="accordion-title">キャラクターの心情と秘密を意識する</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            時にはあなたにとって明かしたくない秘密を明らかにする選択肢もあります。事件解決のために秘密を明かすのか、それとも秘密を守るのか、迷った時はキャラクターの心情や背景を汲み取って「このキャラクターならどうするか」を判断基準に慎重に考えましょう。
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <h3>事件解決だけが目的ではない</h3>
-        <p>マーダーミステリーでは、犯人を見つけることだけがゴールとは限りません。キャラクターごとの使命や勝利条件がある場合があります。物語終了時に特定の持ち物を持っていること、他のプレイヤーと特定の約束を結んでいることなど、他プレイヤーの動きには細心の注意を払いましょう。</p>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-num">5</span>
+          <span class="accordion-title">事件解決だけが目的ではない</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            マーダーミステリーでは、犯人を見つけることだけがゴールとは限りません。キャラクターごとの使命や勝利条件がある場合があります。物語終了時に特定の持ち物を持っていること、他のプレイヤーと特定の約束を結んでいることなど、他プレイヤーの動きには細心の注意を払いましょう。
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <h3>時間配分を意識する</h3>
-        <p>終盤は特に時間に追われることが多いです。優先順位をつけて、怪しいと思う人から話を聞きましょう。</p>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="accordion-num">6</span>
+          <span class="accordion-title">時間配分を意識する</span>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            終盤は特に時間に追われることが多いです。優先順位をつけて、怪しいと思う人から話を聞きましょう。
+          </div>
+        </div>
       </div>
+
     </div>
   </section>
- 
-  <!-- ━━ Highlight ━━ -->
-  <section class="section" style="border-bottom: none;">
-    <div class="highlight">
-      <p>
-        正解を当てることだけがゴールではありません。<br>
-        <span>物語を全力で楽しむこと</span>。<br>
-        あなたとあなたのキャラクターの望む結末を楽しみながら目指しましょう。
-      </p>
-    </div>
-  </section>
- 
+
 </div>
- 
+
+<!-- Full-width highlight -->
+<div class="highlight">
+  <p>
+    正解を当てることだけがゴールではありません。<br>
+    <span>物語を全力で楽しむこと</span>。<br>
+    あなたとあなたのキャラクターの望む結末を楽しみながら目指しましょう。
+  </p>
+</div>
+
 <footer class="footer">
-  Murder Mystery Beginner's Guide — Have a great game!
+  Murder Mystery Beginner's Guide — Have a great game! ver1.0
 </footer>
- 
+
+<script src="guide.js"></script>
 </body>
 </html>
